@@ -138,6 +138,7 @@ static inline NSString * AFHMACSHA1Signature(NSString *baseString, NSString *con
 - (NSMutableURLRequest *)requestWithMethod:(NSString *)method
                                  URLString:(NSString *)URLString
                                 parameters:(NSDictionary *)parameters
+                                     error:(NSError *__autoreleasing *)error
 {
     _nonce = [NSString stringWithFormat:@"%d", arc4random()];
     _timestamp = [NSString stringWithFormat:@"%d", (int)ceil((float)[[NSDate date] timeIntervalSince1970])];
@@ -150,7 +151,11 @@ static inline NSString * AFHMACSHA1Signature(NSString *baseString, NSString *con
     return request;
 }
 
--(NSMutableURLRequest *)multipartFormRequestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters constructingBodyWithBlock:(void (^)(id<AFMultipartFormData>))block
+- (NSMutableURLRequest *)multipartFormRequestWithMethod:(NSString *)method
+                                              URLString:(NSString *)URLString
+                                             parameters:(NSDictionary *)parameters
+                              constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
+                                                  error:(NSError *__autoreleasing *)error
 {
     _nonce = [NSString stringWithFormat:@"%d", arc4random()];
     _timestamp = [NSString stringWithFormat:@"%d", (int)ceil((float)[[NSDate date] timeIntervalSince1970])];
